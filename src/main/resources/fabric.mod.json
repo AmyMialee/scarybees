@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "scarybees",
+  "version": "${version}",
+  "name": "scarybees",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/AmyMialeeMods/scarybees"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/scarybees/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "xyz.amymialee.scarybees.ScaryBeesClient"
+    ],
+    "main": [
+      "xyz.amymialee.scarybees.ScaryBees"
+    ],
+    "cardinal-components-entity": [
+      "xyz.amymialee.scarybees.ScaryBees"
+    ]
+  },
+  "mixins": [
+    "scarybees.mixins.json"
+  ],
+  "custom": {
+    "cardinal-components": [
+      "scarybees:mask"
+    ]
+  },
+  "depends": {
+    "fabric": "*"
+  }
+}
