@@ -1,0 +1,97 @@
+{
+  "values": [
+    "minecraft:carved_pumpkin",
+    "minecraft:jack_o_lantern",
+    "minecraft:skeleton_skull",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:player_head",
+    "minecraft:zombie_head",
+    "minecraft:creeper_head",
+    "minecraft:piglin_head",
+    "minecraft:dragon_head",
+    {
+      "required": false,
+      "id": "amarite:axolotl_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:bunny_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:butterfly_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:demon_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:fox_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:guardian_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:moon_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:oni_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:unicorn_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:warden_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:winsweep_mask"
+    },
+    {
+      "required": false,
+      "id": "amarite:amarite_crown"
+    },
+    {
+      "required": false,
+      "id": "amarite:amarite_disc"
+    },
+    {
+      "required": false,
+      "id": "befoul:drowned_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:husk_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:stray_skull"
+    },
+    {
+      "required": false,
+      "id": "befoul:zombified_piglin_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:hoglin_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:zoglin_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:zombie_villager_head"
+    },
+    {
+      "required": false,
+      "id": "befoul:warden_head"
+    }
+  ]
+}

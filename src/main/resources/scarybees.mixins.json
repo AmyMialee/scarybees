@@ -4,12 +4,12 @@
   "package": "xyz.amymialee.scarybees.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AnimalEntityMixin",
-    "BeeEntityMixin"
+    "AnimalEntityMixin"
   ],
   "client": [
     "BeeEntityModelAccessor",
-    "BeeEntityRendererMixin"
+    "BeeEntityRendererMixin",
+    "CreativeInventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
