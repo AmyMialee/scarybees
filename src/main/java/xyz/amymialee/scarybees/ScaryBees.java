@@ -13,7 +13,6 @@ import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.TagKey;
@@ -45,10 +44,7 @@ public class ScaryBees implements ModInitializer, EntityComponentInitializer {
     public void onInitialize() {
         Registry.register(Registries.ITEM_GROUP, id(MOD_ID), BEE_GROUP);
         ITEMS.keySet().forEach(item -> Registry.register(Registries.ITEM, ITEMS.get(item), item));
-        Registries.ITEM_GROUP.getKey(BEE_GROUP).ifPresent(key -> {
-            ItemGroupEvents.modifyEntriesEvent(key).register(content -> content.add(Items.BEE_SPAWN_EGG));
-            Registries.ITEM.getEntryList(BEE_MASKS).ifPresent(list -> list.forEach(stack -> ItemGroupEvents.modifyEntriesEvent(key).register(content -> content.add(stack.value()))));
-        });
+        Registries.ITEM_GROUP.getKey(BEE_GROUP).ifPresent(key -> ITEMS.keySet().forEach(stack -> ItemGroupEvents.modifyEntriesEvent(key).register(content -> content.add(stack))));
     }
 
     @Override
