@@ -9,6 +9,12 @@
     "minecraft:creeper_head",
     "minecraft:piglin_head",
     "minecraft:dragon_head",
+    "scarybees:mask_bee",
+    "scarybees:mask_creeper",
+    "scarybees:mask_enderman",
+    "scarybees:mask_redstone_golem",
+    "scarybees:mask_skeleton",
+    "scarybees:mask_squid",
     {
       "required": false,
       "id": "amarite:axolotl_mask"

@@ -85,16 +85,12 @@ public class BeeHeadFeatureRenderer extends FeatureRenderer<BeeEntity, BeeEntity
                 var o = limbAnimator.getPos(h);
                 SkullBlockEntityRenderer.renderSkull(null, 180.0F, o, matrixStack, vertexConsumerProvider, i, skullBlockEntityModel, renderLayer);
             } else {
-                translate(matrixStack);
+                matrixStack.translate(0.0F, -0.25F, 0.0F);
+                matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
+                matrixStack.scale(0.625F, -0.625F, -0.625F);
                 this.heldItemRenderer.renderItem(bee, mask, ModelTransformationMode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             }
             matrixStack.pop();
         }
-    }
-
-    public static void translate(@NotNull MatrixStack matrices) {
-        matrices.translate(0.0F, -0.25F, 0.0F);
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
-        matrices.scale(0.625F, -0.625F, -0.625F);
     }
 }

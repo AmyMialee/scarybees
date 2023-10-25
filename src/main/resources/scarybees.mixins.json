@@ -4,7 +4,9 @@
   "package": "xyz.amymialee.scarybees.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AnimalEntityMixin"
+    "AnimalEntityMixin",
+    "BeeEntityMixin",
+    "PassiveEntityMixin"
   ],
   "client": [
     "BeeEntityModelAccessor",

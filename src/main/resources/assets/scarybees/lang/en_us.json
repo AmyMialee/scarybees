@@ -1,4 +1,9 @@
 {
   "itemGroup.scarybees" : "Scary Bees",
-  "item.scarybees.creeper_mask" : "Creeper Mask"
+  "item.scarybees.mask_bee" : "Bee Mask",
+  "item.scarybees.mask_creeper" : "Creeper Mask",
+  "item.scarybees.mask_enderman" : "Enderman Mask",
+  "item.scarybees.mask_redstone_golem" : "Redstone Golem Mask",
+  "item.scarybees.mask_skeleton" : "Skeleton Mask",
+  "item.scarybees.mask_squid" : "Squid Mask"
 }

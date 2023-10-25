@@ -1,0 +1,6 @@
+{
+  "parent": "scarybees:item/template_mask",
+  "textures": {
+    "mask": "scarybees:item/mask_creeper"
+  }
+}
