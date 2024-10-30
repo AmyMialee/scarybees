@@ -20,15 +20,11 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
         super(screenHandler, playerInventory, text);
     }
 
-    @Contract(pure = true)
     @WrapOperation(method = "renderTabIcon", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemGroup;getIcon()Lnet/minecraft/item/ItemStack;"))
     private ItemStack scaryBees$renderTabIcons(ItemGroup instance, @NotNull Operation<ItemStack> original) {
-            if (instance == ScaryBees.BEE_GROUP) {
-                var array = instance.getDisplayStacks().toArray(new ItemStack[0]);
-                if (array.length > 0) {
-                    return array[(int) (System.currentTimeMillis() / 1000) % array.length];
-                }
-            }
-            return original.call(instance);
+        if (instance != ScaryBees.BEE_GROUP) return original.call(instance);
+        var array = instance.getDisplayStacks().toArray(new ItemStack[0]);
+        if (array.length > 0) return array[(int) (System.currentTimeMillis() / 1000) % array.length];
+        return original.call(instance);
     }
 }

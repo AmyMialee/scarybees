@@ -1,8 +1,7 @@
 plugins {
-    id 'fabric-loom' version '1.4-SNAPSHOT'
+    id 'fabric-loom' version '1.8-SNAPSHOT'
     id 'maven-publish'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id "com.modrinth.minotaur" version "2.+"
+    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
 }
 
 base {
@@ -27,92 +26,84 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation ("com.terraformersmc:modmenu:${project.modmenu_version}")
-//    modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version}")
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
-    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")))
+    modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+    modImplementation include("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 }
 
-curseforge {
-    apiKey = project.hasProperty('curseforge_api_key') ? project.property('curseforge_api_key') : ''
-    project {
-        id = project.curseforge_project_id
-        changelogType = 'markdown'
-        addGameVersion project.minecraft_version
-        addGameVersion "Fabric"
-        addGameVersion "Quilt"
-        mainArtifact(remapJar) {
-            displayName = "v${project.version.toString().split("\\+")[0]} for Fabric/Quilt MC $project.minecraft_version"
-            releaseType = "release"
-            relations {
-                requiredDependency "fabric-api"
-            }
+publishMods {
+    file = remapJar.archiveFile
+    additionalFiles.files.add(remapSourcesJar.archiveFile.get().getAsFile())
+    displayName = "${project.version.toString().split("\\+")[0]} for Fabric $minecraft_version"
+    changelog = new File("CHANGELOG.md").text
+    type = STABLE
+    modLoaders.addAll("fabric", "quilt")
+    dryRun = !providers.gradleProperty("curseforge_api_key").isPresent() || !providers.gradleProperty("modrinth_api_key").isPresent() || !providers.gradleProperty("discord_webhook").isPresent()
+    curseforge {
+        accessToken = providers.gradleProperty('curseforge_api_key')
+        projectId = curseforge_id
+        minecraftVersionRange {
+            start = minecraft_version_range_start
+            end = minecraft_version_range_end
         }
+        announcementTitle = "Download from CurseForge"
+        javaVersions.addAll(JavaVersion.VERSION_21, JavaVersion.VERSION_22)
+        clientRequired = true;
+        serverRequired = true;
+        projectSlug = curseforge_slug
+        requires("fabric-api")
+        embeds("cardinal-components-api")
     }
-}
-
-modrinth {
-    token = project.hasProperty("modrinth_api_key") ? project.property("modrinth_api_key") : ""
-    projectId = project.modrinth_project_id
-    versionNumber = project.version
-    versionName = "v${project.version.toString().split("\\+")[0]} for Fabric/Quilt MC $project.minecraft_version"
-    versionType = "release"
-    uploadFile = remapJar
-    gameVersions = [project.minecraft_version]
-    loaders = ["fabric", "quilt"]
-    dependencies {
-        // required/optional/incompatible/embedded + project/version
-        required.project "fabric-api"
+    modrinth {
+        accessToken = providers.gradleProperty("modrinth_api_key")
+        projectId = modrinth_id
+        minecraftVersionRange {
+            start = minecraft_version_range_start
+            end = minecraft_version_range_end
+            includeSnapshots = true
+        }
+        announcementTitle = "Download from Modrinth"
+        requires("fabric-api")
+        embeds("cardinal-components-api")
+    }
+    discord {
+        webhookUrl = providers.gradleProperty("discord_webhook")
+        dryRunWebhookUrl = providers.gradleProperty("discord_webhook")
+        username = "Abee"
+        avatarUrl = "https://cdn.discordapp.com/emojis/1006355140657299528.gif?quality=lossless"
+        setPlatforms(publishMods.platforms.modrinth, publishMods.platforms.curseforge)
     }
 }
 
 processResources {
     inputs.property "version", project.version
+    inputs.property "fabric_version", project.fabric_version
+    inputs.property "loader_version", project.loader_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "modmenu_version", project.modmenu_version
     filteringCharset "UTF-8"
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-loom {
-    accessWidenerPath = file("src/main/resources/scarybees.accesswidener")
-    runs {
-        datagen {
-            inherit server
-            name "Data Generation"
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-            vmArg "-Dfabric-api.datagen.modid=${project.archives_base_name}"
-            runDir "build/datagen"
-        }
-    }
-}
-
-processResources {
-    inputs.property "version", version
-    filteringCharset "UTF-8"
-    filesMatching('quilt.mod.json') {
-        expand "version": version
+        expand "version": project.version,
+                "fabric_version": project.fabric_version,
+                "loader_version": project.loader_version,
+                "minecraft_version": project.minecraft_version,
+                "modmenu_version": project.modmenu_version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = 'UTF-8'
-    it.options.release = 17
+    it.options.release = 21
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs += [
-                    'src/main/generated'
-            ]
-        }
+jar {
+    from("LICENSE.md") {
+        rename { "${it}_${project.archivesBaseName}" }
     }
 }

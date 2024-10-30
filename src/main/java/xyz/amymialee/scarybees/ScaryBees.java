@@ -1,12 +1,6 @@
 package xyz.amymialee.scarybees;
 
-import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.passive.BeeEntity;
@@ -19,6 +13,9 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
+import org.ladysnake.cca.api.v3.entity.RespawnCopyStrategy;
 import xyz.amymialee.scarybees.cca.BeeMaskComponent;
 import xyz.amymialee.scarybees.item.MaskItem;
 
@@ -27,7 +24,6 @@ import java.util.Map;
 
 public class ScaryBees implements ModInitializer, EntityComponentInitializer {
     public static String MOD_ID = "scarybees";
-    public static final ComponentKey<BeeMaskComponent> BEE_MASK = ComponentRegistry.getOrCreate(id("mask"), BeeMaskComponent.class);
     public static final TagKey<Item> BEE_MASKS = TagKey.of(Registries.ITEM.getKey(), id("bee_masks"));
     public static final TagKey<Item> SPAWNABLE_BEE_MASKS = TagKey.of(Registries.ITEM.getKey(), id("spawnable_bee_masks"));
     public static final ItemGroup BEE_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup." + MOD_ID)).icon(ScaryBees::getIcon).build();
@@ -49,11 +45,11 @@ public class ScaryBees implements ModInitializer, EntityComponentInitializer {
 
     @Override
     public void registerEntityComponentFactories(@NotNull EntityComponentFactoryRegistry registry) {
-        registry.beginRegistration(BeeEntity.class, BEE_MASK).respawnStrategy(RespawnCopyStrategy.INVENTORY).end(BeeMaskComponent::new);
+        registry.beginRegistration(BeeEntity.class, BeeMaskComponent.KEY).respawnStrategy(RespawnCopyStrategy.INVENTORY).end(BeeMaskComponent::new);
     }
 
     public static @NotNull Item createMask(String name) {
-        var item = new MaskItem(new FabricItemSettings().maxCount(1));
+        var item = new MaskItem(new Item.Settings().maxCount(1));
         ITEMS.put(item, id(name));
         return item;
     }
@@ -63,6 +59,6 @@ public class ScaryBees implements ModInitializer, EntityComponentInitializer {
     }
 
     public static @NotNull Identifier id(String name) {
-        return new Identifier(MOD_ID, name);
+        return Identifier.of(MOD_ID, name);
     }
 }

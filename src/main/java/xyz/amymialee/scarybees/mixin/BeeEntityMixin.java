@@ -14,7 +14,7 @@ import xyz.amymialee.scarybees.cca.BeeMaskComponent;
 @Mixin(BeeEntity.class)
 public class BeeEntityMixin {
     @Inject(method = "createChild(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/PassiveEntity;)Lnet/minecraft/entity/passive/BeeEntity;", at = @At("RETURN"))
-    private void scaryBees$spawn(ServerWorld serverWorld, PassiveEntity passiveEntity, @NotNull CallbackInfoReturnable<BeeEntity> cir) {
-        ScaryBees.BEE_MASK.maybeGet(cir.getReturnValue()).ifPresent(BeeMaskComponent::initialize);
+    private void scarybees$spawn(ServerWorld serverWorld, PassiveEntity passiveEntity, @NotNull CallbackInfoReturnable<BeeEntity> cir) {
+        BeeMaskComponent.KEY.maybeGet(cir.getReturnValue()).ifPresent(BeeMaskComponent::initialize);
     }
 }

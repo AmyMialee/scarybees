@@ -2,17 +2,26 @@
   "schemaVersion": 1,
   "id": "scarybees",
   "version": "${version}",
+
+
   "name": "Scary Bees",
-  "description": "",
+  "description": "Gives Bees a bit of Halloween Flair!",
   "authors": [
     "AmyMialee",
     "Diansu"
   ],
+  "contributors": [],
   "contact": {
-    "repo": "https://github.com/AmyMialeeMods/scarybees"
+    "email": "scarybees@amymialee.xyz",
+    "homepage": "https://amymialee.xyz",
+    "irc": "",
+    "sources": "https://github.com/AmyMialeeMods/scarybees",
+    "issues": "https://github.com/AmyMialeeMods/scarybees/issues"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/scarybees/icon.png",
+
+
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -28,12 +37,37 @@
   "mixins": [
     "scarybees.mixins.json"
   ],
+
+
+  "depends": {
+    "fabric": "*"
+  },
+  "recommends": {
+    "fabric": ">=${fabric_version}",
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": ">${modmenu_version}"
+  },
+  "conflicts": {},
+  "breaks": {},
+
+
   "custom": {
     "cardinal-components": [
       "scarybees:mask"
-    ]
-  },
-  "depends": {
-    "fabric": "*"
+    ],
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/scarybees",
+        "modmenu.discord": "https://discord.amymialee.xyz",
+        "modmenu.kofi": "https://ko-fi.com/amymialee",
+        "modmenu.modrinth": "https://modrinth.com/project/scarybees",
+        "modmenu.twitter": "https://x.com/amy_mialee",
+        "modmenu.wiki": "https://modrinth.com/project/scarybees"
+      },
+      "update_checker": true
+    }
   }
 }
